@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBKing Contact Gain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #000000;
+            color: #FFD700;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        /* Brand header */
+        .brand {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .brand h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 
+                0 0 10px #FFD700,
+                0 0 20px #FFD700,
+                0 0 30px #FFD700;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .brand .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #B8860B;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Form card */
+        .form-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(184, 134, 11, 0.05));
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.3),
+                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #B8860B, #FFD700);
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #FFD700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #B8860B;
+            border-radius: 10px;
+            color: #FFD700;
+            font-size: 1.1rem;
+            font-family: 'Orbitron', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .form-group input::placeholder {
+            color: #B8860B;
+            opacity: 0.7;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #000;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Admin link */
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #B8860B;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .admin-link:hover {
+            opacity: 1;
+            color: #FFD700;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .brand h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-card {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .container {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="brand">
+            <h1>IBKing</h1>
+            <div class="subtitle">Contact Gain</div>
+        </div>
+        
+        <div class="form-card">
+            <h2 class="form-title">Join the Elite Circle</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Enter the Kingdom
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="/admin/download" class="admin-link">Admin Portal</a>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const fullName = document.getElementById('fullName').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            
+            if (!fullName || !phoneNumber) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Add loading state
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Processing...';
+            
+            try {
+                const response = await fetch('/api/submit-contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fullName: fullName,
+                        phoneNumber: phoneNumber,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                if (response.ok) {
+                    // Redirect to WhatsApp group
+                    window.location.href = 'https://chat.whatsapp.com/DFxLAiRZO4QL1Aw2rOY27q?mode=r_c';
+                } else {
+                    throw new Error('Failed to submit contact');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+                
+                // Reset button
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = 'Enter the Kingdom';
+            }
+        });
+
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>
